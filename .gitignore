@@ -1,4 +1,7 @@
+# Python
 /myenv
+*.pyc
+
 
 # VS code
 .vscode
