@@ -1,5 +1,8 @@
 import discord, random
 
+from api.google_drive import drive_service
+from datetime import datetime
+
 class BotClient(discord.Client):
     async def on_ready(self):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
@@ -43,3 +46,23 @@ class BotClient(discord.Client):
 
         if message.content.startswith('!help'):
             await message.reply(f'No help!', mention_author=False)
+
+        if message.content.startswith('!files'):
+            files = drive_service.get_data()
+
+            if not files:
+                await message.reply('Sorry! I didn\'t find any files!', mention_author=False)
+                return
+
+            response = f'Hey {username}! Here is the list of files:\n'
+            
+            for file in files:
+                name = file.get('name')
+                modifiedTimeStr = file.get('modifiedTime')
+                modifiedTime = datetime.strptime(modifiedTimeStr, '%Y-%m-%dT%H:%M:%S.%fZ')
+                modifiedTimeFormat = modifiedTime.strftime('%d/%m/%Y')
+                fileDescription = f'{name} ({modifiedTimeFormat})'
+                print(f'File: {fileDescription}')
+                response = response + '- ' + fileDescription + '\n'
+            
+            await message.reply(response, mention_author=False)
