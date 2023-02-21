@@ -47,6 +47,9 @@ class BotClient(discord.Client):
         if message.content.startswith('!help'):
             await message.reply(f'No help!', mention_author=False)
 
+        if message.content.startswith('!link'):
+            await message.reply('Here is the link:\nhttps://mylink.com/')
+
         if message.content.startswith('!files'):
             files = drive_service.get_data()
 
