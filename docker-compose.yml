@@ -1,0 +1,11 @@
+version: "2.0"
+
+services:
+  discord_bot:
+    container_name: discord_bot
+    image: discord_bot
+    build:
+      dockerfile: Dockerfile
+    environment:
+      - DISCORD_TOKEN=MTA3NzI1NzUwMzY5MzM0NDc5OA.GpDCNx.U6MkgjV0gjOrM-mv36-rZTG6WxqC8EndgAHH90
+    restart: always
